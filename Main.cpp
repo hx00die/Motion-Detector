@@ -80,7 +80,7 @@ int main() {
 				OldFrame[index] = NewFarme[index];
 				OldFilterd[index] = NewFilterd[index];
 
-				float lumanace = (colour.c[3] / 255.0f) * 0.3 + (colour.c[2] / 255.0f) * 0.59 + (colour.c[1] / 255.0f) * 0.8;
+				float lumanace = (colour.c[3] / 255.0f) * 0.3 + (colour.c[2] / 255.0f) * 0.59 + (colour.c[1] / 255.0f) * /*0.8 <-- play with this value*/;
 				NewFarme[index] = lumanace;
 
 				NewFilterd[index] += (NewFarme[index] - NewFilterd[index]) * 0.3f;
@@ -91,113 +91,8 @@ int main() {
 			}
 		}
 
-		if (total > 3000.0f && frames >= 5) { SwitchTab(); std::cout << "Move "; }
+		if (total > /*3000.0f <-- this one to*/ && frames >= 5) { SwitchTab(); std::cout << "Move "; }
 		if (frames <= 5) frames++;
 		total = 0;
 	}
 }
-
-//#include <iostream>
-//
-//#define OLC_PGE_APPLICATION
-//#include "olcPixelGameEngine.h"
-//
-//#include "escapi.h"
-//
-//class Engine : public olc::PixelGameEngine
-//{
-//public:
-//	Engine()
-//	{
-//		sAppName = "Motion Detector";
-//	}
-//
-//private:
-//	union RGBint {
-//		int rgb;
-//		unsigned char c[4];
-//	};
-//
-//	int Cameras = 0;
-//	SimpleCapParams capture;
-//
-//	float* NewFarme = nullptr;
-//	float* OldFrame = nullptr;
-//	float* NewFilterd = nullptr;
-//	float* OldFilterd = nullptr;
-//
-//	int frames = 0;
-//	float total = 0;
-//
-//public:
-//	bool OnUserCreate() override
-//	{
-//		Cameras = setupESCAPI();
-//
-//		if (Cameras == 0) {
-//			std::cout << "No cameras";
-//			return false;
-//		}
-//
-//		capture.mWidth = ScreenWidth();
-//		capture.mHeight = ScreenHeight();
-//		capture.mTargetBuf = new int[ScreenWidth() * ScreenHeight()];
-//
-//		NewFarme = new float[ScreenWidth() * ScreenHeight()];
-//		OldFrame = new float[ScreenWidth() * ScreenHeight()];
-//		NewFilterd = new float[ScreenWidth() * ScreenHeight()];
-//		OldFilterd = new float[ScreenWidth() * ScreenHeight()];
-//
-//		memset(NewFarme, 0, sizeof(float) * ScreenWidth() * ScreenHeight());
-//		memset(OldFrame, 0, sizeof(float) * ScreenWidth() * ScreenHeight());
-//		memset(NewFilterd, 0, sizeof(float) * ScreenWidth() * ScreenHeight());
-//		memset(OldFilterd, 0, sizeof(float) * ScreenWidth() * ScreenHeight());
-//
-//		if (initCapture(0, &capture) == 0) {
-//			std::cout << "Could not capture";
-//			return false;
-//		}
-//		return true;
-//	}
-//
-//	bool OnUserUpdate(float fElapsedTime) override
-//	{
-//		doCapture(0); while (isCaptureDone(0) == 0) {}
-//
-//		for (int i = 0; i < capture.mWidth; i++) {
-//			for (int j = 0; j < capture.mHeight; j++) {
-//				int index = j * capture.mWidth + i;
-//				RGBint colour;
-//				colour.rgb = capture.mTargetBuf[index];
-//
-//				OldFrame[index] = NewFarme[index];
-//				OldFilterd[index] = NewFilterd[index];
-//
-//				float lumanace = (colour.c[3] / 255.0f) * 0.3 + (colour.c[2] / 255.0f) * 0.59 + (colour.c[1] / 255.0f) * 0.11;
-//				NewFarme[index] = lumanace;
-//
-//				NewFilterd[index] += (NewFarme[index] - NewFilterd[index]) * 0.3f;
-//
-//				float diff = fabs(NewFilterd[index] - OldFilterd[index]);
-//				float value = diff > 0.05f ? diff : 0.0f;
-//				total += value;
-//				Draw(i, j, olc::Pixel(value * 255.0f, value * 255.0f, value * 255.0f));
-//			}
-//		}
-//
-//		if (total > 1500.0f && frames >= 5)
-//			std::cout << "Move";
-//		if (frames <= 5) frames++;
-//		total = 0;
-//
-//		return true;
-//	}
-//};
-//
-//int main()
-//{
-//	Engine engine;
-//	if (engine.Construct(800, 600, 1, 1))
-//		engine.Start();
-//	return 0;
-//}
