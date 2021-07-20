@@ -91,7 +91,7 @@ int main() {
 			}
 		}
 
-		if (total > /*3000.0f <-- this one to*/ && frames >= 5) { SwitchTab(); std::cout << "Move "; }
+		if (total > /*3000.0f <-- this one to*/ && frames >= 5) { std::cout << "Move "; /*SwitchTab();*/  }
 		if (frames <= 5) frames++;
 		total = 0;
 	}
